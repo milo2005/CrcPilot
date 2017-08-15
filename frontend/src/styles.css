@@ -1,0 +1,10 @@
+html, body{
+  height:100vh; 
+  background: #f8f8f8;
+}
+
+.center-crop{
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}

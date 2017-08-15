@@ -1,0 +1,8 @@
+.gradle/
+.vertx/
+build/
+out/
+uploads/
+src/main/resources/webroot/
+.DS_Store
+Thumbs.db

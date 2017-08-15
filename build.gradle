@@ -1,0 +1,2 @@
+//project(":frontend").task(":build").dependsOn(":backend:backendBuild")
+project(":backend").task(":buildgr").dependsOn(":frontend:build")

@@ -1,0 +1,30 @@
+plugins {
+  id "com.moowork.node" version "1.2.0"
+}
+
+node {
+  version = '6.10.2'
+  npmVersion = '3.10.10'
+  nodeModulesDir = file("${project.projectDir}/")
+  download = false
+  //workDir =  file("${prject.projectDir}/node")
+}
+
+task deleteWebRoot(type: Delete) {
+  def webRootDir = "$rootDir/backend/src/main/resources/webroot"
+  delete webRootDir
+}
+
+npm_run_build {
+  args = ['--aot', '-prod']
+}
+
+task build {}
+build.dependsOn(npm_install)
+build.dependsOn(deleteWebRoot)
+build.dependsOn(npm_run_build)
+
+
+
+
+
