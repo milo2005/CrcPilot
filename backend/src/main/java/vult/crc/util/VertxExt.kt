@@ -1,13 +1,12 @@
 package vult.crc.util
 
-import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
-import io.vertx.rxjava.core.http.HttpServerResponse
 import io.vertx.rxjava.ext.web.Route
 import io.vertx.rxjava.ext.web.Router
 import io.vertx.rxjava.ext.web.RoutingContext
+
 
 fun Router.get(path: String, handler: (RoutingContext) -> Unit): Route {
     return get(path).handler(handler)
@@ -48,3 +47,7 @@ fun RoutingContext.endWithFile(filePath: String) {
 }
 
 fun RoutingContext.formAttribute(attributeName:String):String? = request().getFormAttribute(attributeName)
+
+fun RoutingContext.publish(address:String, message:JsonObject){
+    vertx().eventBus().publish(address, message)
+}

@@ -1,5 +1,7 @@
 package vult.crc.http
 
+import io.vertx.kotlin.core.json.json
+import io.vertx.kotlin.core.json.obj
 import io.vertx.rxjava.core.Vertx
 import io.vertx.rxjava.ext.web.Router
 import io.vertx.rxjava.ext.web.RoutingContext
@@ -30,8 +32,16 @@ private fun saveReport(context: RoutingContext, service: ReportService) {
     if (context.fileUploads().size > 0) {
         val description: String? = context.formAttribute("description")
         val fileName = context.fileUploads().elementAt(0).uploadedFileName()
-        service.rxInsert(Report(fileName, description, Date().time))
-                .subscribe(context::endWithJsonId, context::apiFailure)
+        val report = Report(fileName, description, Date().time)
+        service.rxInsert(report)
+                .doOnSuccess {
+                    val msg = json {
+                        obj("image" to report.image,
+                                "description" to report.description,
+                                "timestamp" to report.timestamp)
+                    }
+                    context.publish("report.added", msg)
+                }.subscribe(context::endWithJsonId, context::apiFailure)
     } else context.apiFailure("Error al subir imagen")
 }
 

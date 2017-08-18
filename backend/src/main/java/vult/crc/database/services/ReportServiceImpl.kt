@@ -1,10 +1,12 @@
 package vult.crc.database.services
 
+
 import io.vertx.core.AsyncResult
 import io.vertx.core.Handler
 import io.vertx.core.json.JsonObject
 import io.vertx.rx.java.RxHelper
 import io.vertx.rxjava.ext.mongo.MongoClient
+//import io.vertx.rxjava.ext.mongo.MongoClient
 import rx.Observable
 import vult.crc.database.models.Report
 
